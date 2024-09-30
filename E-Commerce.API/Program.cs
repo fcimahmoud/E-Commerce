@@ -3,18 +3,26 @@ namespace E_Commerce.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+            builder.Services.AddDbContext<StoreContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection"));
+            });
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+
+            await InitializeAsync(app);
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -31,6 +39,14 @@ namespace E_Commerce.API
             app.MapControllers();
 
             app.Run();
+
+            async Task InitializeAsync(WebApplication app)
+            {
+                // Create Object from Type that Implement IDbInitializer
+                using var scope = app.Services.CreateScope();
+                var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+                await dbInitializer.InitializeAsync();
+            }
         }
     }
 }
