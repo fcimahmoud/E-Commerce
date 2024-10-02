@@ -3,7 +3,7 @@ using Domain.Contracts;
 
 namespace Services
 {
-    internal class ServiceManager : IServiceManager
+    public class ServiceManager : IServiceManager
     {
         private readonly Lazy<IProductService> _productService;
 
