@@ -13,6 +13,7 @@ namespace Services.Specifications
             AddInclude(product => product.ProductType);
         }
 
+        // Use to Get All Products 
         public ProductWithBrandAndTypeSpecifications()
             : base(null)
         {

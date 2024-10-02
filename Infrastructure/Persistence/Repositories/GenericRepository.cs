@@ -1,4 +1,5 @@
 ﻿
+using Domain.Contracts;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace Persistence.Repositories
@@ -16,8 +17,17 @@ namespace Persistence.Repositories
         public void Delete(TEntity entity) => _storeContext.Set<TEntity>().Remove(entity);
         public void Update(TEntity entity) => _storeContext.Set<TEntity>().Update(entity);
         public async Task<TEntity?> GetAsync(TKey id) => await _storeContext.Set<TEntity>().FindAsync(id);
-        public async Task<IEnumerable<TEntity?>> GetAllAsync(bool trackChanges = false) => trackChanges ? await _storeContext.Set<TEntity>().ToListAsync() : await _storeContext.Set<TEntity>().AsNoTracking().ToListAsync();
+        public async Task<IEnumerable<TEntity?>> GetAllAsync(bool trackChanges = false) 
+            => trackChanges ? await _storeContext.Set<TEntity>().ToListAsync() : await _storeContext.Set<TEntity>().AsNoTracking().ToListAsync();
 
 
+        public async Task<TEntity?> GetAsync(Specifications<TEntity> specifications)
+            => await ApplySpecificationsAsync(specifications).FirstOrDefaultAsync();
+
+        public async Task<IEnumerable<TEntity?>> GetAllAsync(Specifications<TEntity> specifications)
+            => await ApplySpecificationsAsync(specifications).ToListAsync();
+
+        private IQueryable<TEntity> ApplySpecificationsAsync(Specifications<TEntity> specifications)
+            => SpecificationEvaluator.GetQuery<TEntity>(_storeContext.Set<TEntity>(), specifications);
     }
 }
