@@ -16,7 +16,7 @@ namespace Persistence.Repositories
         public void Delete(TEntity entity) => _storeContext.Set<TEntity>().Remove(entity);
         public void Update(TEntity entity) => _storeContext.Set<TEntity>().Update(entity);
         public async Task<TEntity?> GetAsync(TKey id) => await _storeContext.Set<TEntity>().FindAsync(id);
-        public async Task<IEnumerable<TEntity?>> GetAllAsync(bool trackChanges) => trackChanges ? await _storeContext.Set<TEntity>().ToListAsync() : await _storeContext.Set<TEntity>().AsNoTracking().ToListAsync();
+        public async Task<IEnumerable<TEntity?>> GetAllAsync(bool trackChanges = false) => trackChanges ? await _storeContext.Set<TEntity>().ToListAsync() : await _storeContext.Set<TEntity>().AsNoTracking().ToListAsync();
 
 
     }
