@@ -1,7 +1,4 @@
 ﻿
-using Domain.Contracts;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-
 namespace Persistence.Repositories
 {
     internal class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey>
