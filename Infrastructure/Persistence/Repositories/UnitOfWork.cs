@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+global using System.Collections.Concurrent;
+
 
 namespace Persistence.Repositories
 {
-    internal class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly StoreContext _storeContext;
         private readonly ConcurrentDictionary<string, object> _repositories;
