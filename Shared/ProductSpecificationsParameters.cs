@@ -15,6 +15,8 @@ namespace Shared
             get => _pageSize;
             set => _pageSize = value > 10 ? 10 : value; 
         }
+        public string? Search { get; set; }
+
     }
 
     public enum ProductSortOptions
