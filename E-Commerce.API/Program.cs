@@ -1,4 +1,6 @@
 
+using E_Commerce.API.Middlewares;
+
 namespace E_Commerce.API
 {
     public class Program
@@ -28,6 +30,7 @@ namespace E_Commerce.API
 
             var app = builder.Build();
 
+            app.UseMiddleware<GlobalErrorHandlingMiddleware>();
             await InitializeAsync(app);
 
             // Configure the HTTP request pipeline.
