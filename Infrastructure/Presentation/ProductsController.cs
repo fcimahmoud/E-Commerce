@@ -2,6 +2,8 @@
 global using Microsoft.AspNetCore.Mvc;
 global using Shared;
 using Services.Abstractions;
+using Shared.ErrorModels;
+using System.Net;
 
 
 namespace Presentation
@@ -29,6 +31,11 @@ namespace Presentation
             var types = await serviceManager.ProductService.GetAllTypesAsync();
             return Ok(types);
         }
+
+        [ProducesResponseType(typeof(ErrorDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ErrorDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ValidationErrorResponse), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProductResultDTO), (int)HttpStatusCode.OK)]
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<BrandResultDTO>>> GetProduct(int id)
         {
