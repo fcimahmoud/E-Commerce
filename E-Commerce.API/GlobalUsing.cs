@@ -5,4 +5,5 @@ global using Persistence.Data;
 global using Persistence.Repositories;
 global using Services.Abstractions;
 global using Services;
+global using E_Commerce.API.Extensions;
 

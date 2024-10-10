@@ -14,25 +14,28 @@ namespace Services.Specifications
         }
 
         // Use to Get All Products 
-        public ProductWithBrandAndTypeSpecifications(string? sort, int? brandId, int? typeId)
-            : base(product => 
-                    (!brandId.HasValue || product.BrandId == brandId.Value) && 
-                    (!typeId.HasValue || product.TypeId == typeId.Value))
+        public ProductWithBrandAndTypeSpecifications(ProductSpecificationsParameters parameters)
+            : base(product =>
+                    (!parameters.BrandId.HasValue || product.BrandId == parameters.BrandId.Value) &&
+                    (!parameters.TypeId.HasValue || product.TypeId == parameters.TypeId.Value) &&
+                    (string.IsNullOrWhiteSpace(parameters.Search) || product.Name.ToLower().Contains(parameters.Search.ToLower().Trim())))
         {
             AddInclude(product => product.ProductBrand);
             AddInclude(product => product.ProductType);
 
-            if (!string.IsNullOrWhiteSpace(sort))
+            ApplyPagination(parameters.PageIndex, parameters.PageSize);
+
+            if (parameters.Sort is not null)
             {
-                switch(sort.ToLower().Trim())
+                switch(parameters.Sort)
                 {
-                    case "pricedesc":
+                    case ProductSortOptions.PriceDesc:
                         SetOrderByDescending(p => p.Price);
                         break;
-                    case "priceasc":
+                    case ProductSortOptions.PriceAsc:
                         SetOrderBy(p => p.Price);
                         break;
-                    case "namedesc":
+                    case ProductSortOptions.NameDesc:
                         SetOrderByDescending(p => p.Name);
                         break;
                     default:

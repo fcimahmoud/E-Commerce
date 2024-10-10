@@ -2,6 +2,8 @@
 global using Microsoft.AspNetCore.Mvc;
 global using Shared;
 using Services.Abstractions;
+using Shared.ErrorModels;
+using System.Net;
 
 
 namespace Presentation
@@ -11,9 +13,10 @@ namespace Presentation
     public class ProductsController(IServiceManager serviceManager) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductResultDTO>>> GetAllProducts(string? sort, int? brandId, int? typeId)
+        public async Task<ActionResult<PaginatedResult<ProductResultDTO>>> GetAllProducts
+            ([FromQuery] ProductSpecificationsParameters parameters)
         {
-            var products = await serviceManager.ProductService.GetAllProductsAsync(sort, brandId, typeId);
+            var products = await serviceManager.ProductService.GetAllProductsAsync(parameters);
             return Ok(products);
         }
         [HttpGet("Brands")]
@@ -28,6 +31,11 @@ namespace Presentation
             var types = await serviceManager.ProductService.GetAllTypesAsync();
             return Ok(types);
         }
+
+        [ProducesResponseType(typeof(ErrorDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ErrorDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ValidationErrorResponse), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProductResultDTO), (int)HttpStatusCode.OK)]
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<BrandResultDTO>>> GetProduct(int id)
         {
