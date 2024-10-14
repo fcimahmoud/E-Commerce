@@ -19,8 +19,6 @@ namespace E_Commerce.API
 
             #region Pipelines
 
-            // Configure the HTTP request pipeline.
-
             app.UseCustomExceptionMiddleware();
             await app.SeedDbAsync();
 
@@ -33,7 +31,6 @@ namespace E_Commerce.API
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthorization();
-
             app.MapControllers();
 
             app.Run(); 
