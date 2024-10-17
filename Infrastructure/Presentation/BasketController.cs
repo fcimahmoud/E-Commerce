@@ -3,10 +3,8 @@ using Services.Abstractions;
 
 namespace Presentation
 {
-    [ApiController]
-    [Route("api/[controller]")]
     public class BasketController(IServiceManager serviceManager)
-        : Controller
+        : ApiController
     {
         [HttpGet("{id}")] // Get baseUrl/api/Basket/value
         public async Task<ActionResult<BasketDTO>> Get(string id)
