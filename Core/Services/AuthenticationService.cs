@@ -1,7 +1,7 @@
 ﻿
-using Domain.Exceptions;
-using Microsoft.AspNetCore.Identity;
-using Shared.ErrorModels;
+global using Domain.Exceptions;
+global using Microsoft.AspNetCore.Identity;
+global using Shared.ErrorModels;
 
 namespace Services
 {
@@ -24,9 +24,28 @@ namespace Services
                 "Token");
         }
 
-        public Task<UserResultDTO> RegisterAsync(UserRegisterDTO registerModel)
+        public async Task<UserResultDTO> RegisterAsync(UserRegisterDTO registerModel)
         {
-            throw new NotImplementedException();
+            var user = new User()
+            {
+                Email = registerModel.Email,
+                DisplayName = registerModel.DisplayName,
+                PhoneNumber = registerModel.Phone,
+                UserName = registerModel.UserName,
+            };
+
+            var result = await userManager.CreateAsync(user, registerModel.Password);
+
+            if (!result.Succeeded)
+            {
+                var errors = result.Errors.Select(e => e.Description).ToList();
+                throw new ValidationException(errors);
+            }
+
+            return new UserResultDTO(
+                user.DisplayName,
+                user.Email!,
+                "Token");
         }
     }
 }
