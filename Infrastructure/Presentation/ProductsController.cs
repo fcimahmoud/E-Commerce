@@ -1,16 +1,16 @@
 ﻿
 global using Microsoft.AspNetCore.Mvc;
 global using Shared;
-using Services.Abstractions;
-using Shared.ErrorModels;
-using System.Net;
+global using Services.Abstractions;
+global using Shared.ErrorModels;
+global using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Presentation
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductsController(IServiceManager serviceManager) : ControllerBase
+    [Authorize(Roles = "Admin")]
+    public class ProductsController(IServiceManager serviceManager) : ApiController
     {
         [HttpGet]
         public async Task<ActionResult<PaginatedResult<ProductResultDTO>>> GetAllProducts
@@ -32,10 +32,7 @@ namespace Presentation
             return Ok(types);
         }
 
-        [ProducesResponseType(typeof(ErrorDetails), (int)HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(ErrorDetails), (int)HttpStatusCode.InternalServerError)]
-        [ProducesResponseType(typeof(ValidationErrorResponse), (int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType(typeof(ProductResultDTO), (int)HttpStatusCode.OK)]
+
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<BrandResultDTO>>> GetProduct(int id)
         {

@@ -1,5 +1,6 @@
 ﻿using E_Commerce.API.Factories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 
 namespace E_Commerce.API.Extensions
 {
@@ -12,9 +13,41 @@ namespace E_Commerce.API.Extensions
             {
                 options.InvalidModelStateResponseFactory = ApiResponseFactory.CustomValidationErrorResponse;
             });
-            services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
 
+            services.ConfigureSwagger();
+
+            return services;
+        }
+        public static IServiceCollection ConfigureSwagger(this IServiceCollection services)
+        {
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen(options =>
+            {
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please Enter Bearer Token",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT"
+                });
+
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new List<string>(){ }
+                    }
+                });
+            });
             return services;
         }
     }
