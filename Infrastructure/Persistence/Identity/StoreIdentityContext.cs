@@ -3,7 +3,7 @@ global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Persistence.Identity
 {
-    public class StoreIdentityContext : IdentityDbContext
+    public class StoreIdentityContext : IdentityDbContext<User>
     {
         public StoreIdentityContext(DbContextOptions<StoreIdentityContext> options) : base(options)
         {
