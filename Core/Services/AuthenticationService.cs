@@ -2,6 +2,7 @@
 global using Domain.Exceptions;
 global using Microsoft.AspNetCore.Identity;
 global using Shared.ErrorModels;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,7 +10,7 @@ using System.Text;
 
 namespace Services
 {
-    public class AuthenticationService(UserManager<User> userManager) : IAuthenticationService
+    public class AuthenticationService(UserManager<User> userManager, IOptions<JwtOptions> options) : IAuthenticationService
     {
         public async Task<UserResultDTO> LoginAsync(LoginDTO loginModel)
         {
@@ -54,6 +55,8 @@ namespace Services
 
         private async Task<string> CreateTokenAsync(User user)
         {
+            var jwtOptions = options.Value;
+
             // Private Claims
             var authClaims = new List<Claim>
             {
@@ -66,12 +69,12 @@ namespace Services
             foreach (var role in roles)
                 authClaims.Add(new Claim(ClaimTypes.Role, role));
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("qedqwdqqR34T3435VT3V4VCWEWVECRWEVEVWRWRWEEWE"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.SecretKey));
             var signingCreds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
-                audience: "MyAudience",
-                issuer: "https://localhost:5001",
-                expires: DateTime.UtcNow.AddDays(30),
+                audience: jwtOptions.Audience,
+                issuer: jwtOptions.Issure,
+                expires: DateTime.UtcNow.AddDays(jwtOptions.DurationInDays),
                 claims: authClaims,
                 signingCredentials: signingCreds);
 
