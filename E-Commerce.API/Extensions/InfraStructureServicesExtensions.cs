@@ -5,9 +5,8 @@ global using Persistence.Identity;
 global using StackExchange.Redis;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Shared;
-global using Microsoft.IdentityModel.Tokens
-
-using System.Text;
+global using Microsoft.IdentityModel.Tokens;
+global using System.Text;
 
 namespace E_Commerce.API.Extensions
 {

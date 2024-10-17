@@ -4,10 +4,12 @@ global using Shared;
 global using Services.Abstractions;
 global using Shared.ErrorModels;
 global using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Presentation
 {
+    [Authorize(Roles = "Admin")]
     public class ProductsController(IServiceManager serviceManager) : ApiController
     {
         [HttpGet]

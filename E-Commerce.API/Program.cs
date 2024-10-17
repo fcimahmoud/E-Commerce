@@ -9,7 +9,7 @@ namespace E_Commerce.API
 
             #region Services
 
-            builder.Services.AddCoreServices();
+            builder.Services.AddCoreServices(builder.Configuration);
             builder.Services.AddInfraStructureServices(builder.Configuration);
             builder.Services.AddPresentationServices();
 
