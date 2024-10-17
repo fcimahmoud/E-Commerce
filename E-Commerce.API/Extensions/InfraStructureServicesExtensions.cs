@@ -1,4 +1,5 @@
 ﻿
+using Persistence.Identity;
 using StackExchange.Redis;
 
 namespace E_Commerce.API.Extensions
@@ -10,11 +11,19 @@ namespace E_Commerce.API.Extensions
             services.AddScoped<IDbInitializer, DbInitializer>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IBasketRepository, BasketRepository>();
+
             services.AddDbContext<StoreContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultSQLConnection"));
             });
-            services.AddSingleton<IConnectionMultiplexer>( _ => ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis")!));
+
+            services.AddDbContext<StoreIdentityContext>(options => 
+            {
+                options.UseSqlServer(configuration.GetConnectionString("IdentitySQLConnection"));
+            });
+
+            services.AddSingleton<IConnectionMultiplexer>( _ 
+                => ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis")!));
 
             return services;
         }
