@@ -2,6 +2,10 @@
 global using Domain.Exceptions;
 global using Microsoft.AspNetCore.Identity;
 global using Shared.ErrorModels;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Services
 {
@@ -21,7 +25,7 @@ namespace Services
             return new UserResultDTO(
                 user.DisplayName,
                 user.Email!,
-                "Token");
+                await CreateTokenAsync(user));
         }
 
         public async Task<UserResultDTO> RegisterAsync(UserRegisterDTO registerModel)
@@ -45,7 +49,33 @@ namespace Services
             return new UserResultDTO(
                 user.DisplayName,
                 user.Email!,
-                "Token");
+                await CreateTokenAsync(user));
+        }
+
+        private async Task<string> CreateTokenAsync(User user)
+        {
+            // Private Claims
+            var authClaims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.UserName!),
+                new Claim(ClaimTypes.Email, user.Email!)
+            };
+
+            // Add Roles to Claims If Exist
+            var roles = await userManager.GetRolesAsync(user);
+            foreach (var role in roles)
+                authClaims.Add(new Claim(ClaimTypes.Role, role));
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("qedqwdqqR34T3435VT3V4VCWEWVECRWEVEVWRWRWEEWE"));
+            var signingCreds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var token = new JwtSecurityToken(
+                audience: "MyAudience",
+                issuer: "https://localhost:5001",
+                expires: DateTime.UtcNow.AddDays(30),
+                claims: authClaims,
+                signingCredentials: signingCreds);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
