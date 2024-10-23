@@ -65,7 +65,7 @@ namespace Services
         public async Task<IEnumerable<OrderResult>> GetOrdersByEmailAsync(string email)
         {
             var orders = await unitOfWork.GetRepository<Order, Guid>()
-                .GetAsync(new OrderWithIncludeSpecifications(email));
+                .GetAllAsync(new OrderWithIncludeSpecifications(email));
 
             return mapper.Map<IEnumerable<OrderResult>>(orders);
         }

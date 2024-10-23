@@ -73,6 +73,21 @@ namespace Persistence
                         await _storeContext.SaveChangesAsync();
                     }
                 }
+                if (!_storeContext.DeliveryMethods.Any())
+                {
+                    // Read Types From File as String 
+                    var data = await File.ReadAllTextAsync(@"..\Infrastructure\Persistence\Data\Seeding\delivery.json");
+
+                    // Transform into C# objects
+                    var methods = JsonSerializer.Deserialize<List<DeliveryMethod>>(data);
+
+                    // Add to DB & Save Changes
+                    if (methods != null && methods.Any())
+                    {
+                        await _storeContext.DeliveryMethods.AddRangeAsync(methods);
+                        await _storeContext.SaveChangesAsync();
+                    }
+                }
             }
             catch (Exception)
             {

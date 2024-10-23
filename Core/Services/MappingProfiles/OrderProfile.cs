@@ -8,7 +8,7 @@ namespace Services.MappingProfiles
     {
         public OrderProfile()
         {
-            CreateMap<Address, AddressDTO>();
+            CreateMap<Address, AddressDTO>().ReverseMap();
             CreateMap<DeliveryMethod, DeliveryMethodResult>();
 
             CreateMap<OrderItem, OrderItemDTO>()
@@ -17,7 +17,7 @@ namespace Services.MappingProfiles
                 .ForMember(d => d.PictureUrl, options => options.MapFrom(s => s.Product.PictureUrl));
 
             CreateMap<Order, OrderResult>()
-                .ForMember(d => d.PaymentStatus, options => options.MapFrom(s => s.PaymentStatus.ToString()))
+                .ForMember(d => d.PaymentStatus, options => options.MapFrom(s => s.ToString()))
                 .ForMember(d => d.DeliveryMethod, options => options.MapFrom(s => s.DeliveryMethod.ShortName))
                 .ForMember(d => d.Total, options => options.MapFrom(s => s.SubTotal + s.DeliveryMethod.Price));
 
