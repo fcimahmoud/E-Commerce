@@ -22,7 +22,7 @@ namespace Domain.Entities.OrderEntities
         // 3. Order Date
         public DateTimeOffset OrderDate { get; set; } = DateTimeOffset.Now;
         // 4. Order Items
-        public ICollection<OrderItem> OrderItems { get; set; } // Collection Navigational Prop
+        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>(); // Collection Navigational Prop
         // 5. Payment Status
         public OrderPaymentStatus PaymentStatus { get; set; } = OrderPaymentStatus.Pending;
         // 6. Delivery Method
