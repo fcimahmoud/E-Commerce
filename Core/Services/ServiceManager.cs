@@ -21,7 +21,7 @@ namespace Services
                 (() => new BasketService(basketRepository, mapper));
 
             _lazyAuthentication = new Lazy<IAuthenticationService>
-                (() => new AuthenticationService(userManager, options));
+                (() => new AuthenticationService(userManager, options, mapper));
 
             _lazyOrdersService = new Lazy<IOrderService>
                 (() => new OrderService(unitOfWork, mapper, basketRepository));

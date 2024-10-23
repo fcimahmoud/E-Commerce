@@ -2,6 +2,8 @@
 using Domain.Entities.OrderEntities;
 using Shared.OrderModels;
 
+using UserAddress = Domain.Entities.Identity.Address;
+
 namespace Services.MappingProfiles
 {
     public class OrderProfile : Profile
@@ -21,6 +23,7 @@ namespace Services.MappingProfiles
                 .ForMember(d => d.DeliveryMethod, options => options.MapFrom(s => s.DeliveryMethod.ShortName))
                 .ForMember(d => d.Total, options => options.MapFrom(s => s.SubTotal + s.DeliveryMethod.Price));
 
+            CreateMap<AddressDTO, UserAddress>().ReverseMap();
         }
     }
 }
