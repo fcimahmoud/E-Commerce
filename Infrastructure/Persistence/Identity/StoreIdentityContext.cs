@@ -1,5 +1,6 @@
 ﻿
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Domain.Entities.Identity;
 
 namespace Persistence.Identity
 {

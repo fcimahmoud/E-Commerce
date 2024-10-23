@@ -1,5 +1,6 @@
 ﻿
 using Domain.Contracts;
+using Domain.Entities.Identity;
 using Microsoft.Extensions.Options;
 
 namespace Services

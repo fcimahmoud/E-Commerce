@@ -2,6 +2,7 @@
 global using Domain.Exceptions;
 global using Microsoft.AspNetCore.Identity;
 global using Shared.ErrorModels;
+using Domain.Entities.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
