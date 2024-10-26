@@ -28,7 +28,6 @@ namespace Presentation
             return Ok(order);
         }
 
-        [AllowAnonymous]
         [HttpGet("DeliveryMethods")]
         public async Task<ActionResult<IEnumerable<DeliveryMethodResult>>> GetDeliveryMethodsAsync()
         {

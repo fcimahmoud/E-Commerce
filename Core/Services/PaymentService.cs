@@ -24,10 +24,10 @@ namespace Services
             }
 
             // Confirm The Shipping Price Of Delivery Method
-            if (!basket.DeliveryMethod.HasValue) throw new Exception("No Delivery Method Is Selected");
+            if (!basket.DeliveryMethodId.HasValue) throw new Exception("No Delivery Method Is Selected");
             var method = await unitOfWork.GetRepository<DeliveryMethod, int>()
-                .GetAsync(basket.DeliveryMethod.Value)
-                ?? throw new DeliveryMethodNotFoundException(basket.DeliveryMethod.Value);
+                .GetAsync(basket.DeliveryMethodId.Value)
+                ?? throw new DeliveryMethodNotFoundException(basket.DeliveryMethodId.Value);
             basket.ShippingPrice = method.Price;
 
             // Calculate The Total Amount
