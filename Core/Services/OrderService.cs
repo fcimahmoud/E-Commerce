@@ -1,8 +1,4 @@
 ﻿
-using Domain.Entities.OrderEntities;
-using Services.Specifications;
-using Shared.OrderModels;
-
 namespace Services
 {
     internal class OrderService (IUnitOfWork unitOfWork, IMapper mapper, 

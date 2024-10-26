@@ -1,7 +1,4 @@
-﻿using E_Commerce.API.Factories;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.OpenApi.Models;
-
+﻿
 namespace E_Commerce.API.Extensions
 {
     public static class PresentationServicesExtensions

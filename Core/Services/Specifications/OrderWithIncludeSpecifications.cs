@@ -1,8 +1,4 @@
 ﻿
-using Domain.Contracts;
-using Domain.Entities.OrderEntities;
-using System.Linq.Expressions;
-
 namespace Services.Specifications
 {
     public class OrderWithIncludeSpecifications : Specifications<Order>

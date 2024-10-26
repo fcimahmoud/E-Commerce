@@ -1,16 +1,4 @@
 ﻿
-global using Domain.Exceptions;
-global using Microsoft.AspNetCore.Identity;
-global using Shared.ErrorModels;
-using Domain.Entities.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using Shared.OrderModels;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-
 namespace Services
 {
     public class AuthenticationService(UserManager<User> userManager, IOptions<JwtOptions> options, IMapper mapper) 

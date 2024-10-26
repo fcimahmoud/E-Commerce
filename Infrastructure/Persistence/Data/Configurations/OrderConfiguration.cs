@@ -1,6 +1,4 @@
 ﻿
-global using OrderEntity = Domain.Entities.OrderEntities.Order;
-
 namespace Persistence.Data.Configurations
 {
     internal class OrderConfiguration : IEntityTypeConfiguration<OrderEntity>

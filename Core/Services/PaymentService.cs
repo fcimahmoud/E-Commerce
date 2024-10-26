@@ -1,9 +1,4 @@
 ﻿
-global using Domain.Contracts;
-global using Stripe;
-global using Product = Domain.Entities.Product;
-using Domain.Entities.OrderEntities;
-
 namespace Services
 {
     internal class PaymentService(IBasketRepository basketRepository, IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration)

@@ -1,8 +1,4 @@
 ﻿
-using Microsoft.AspNetCore.Authorization;
-using Shared.OrderModels;
-using System.Security.Claims;
-
 namespace Presentation
 {
     [Authorize]

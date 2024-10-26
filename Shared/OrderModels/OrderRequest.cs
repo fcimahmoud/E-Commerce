@@ -1,5 +1,4 @@
 ﻿
-
 namespace Shared.OrderModels
 {
     public record OrderRequest

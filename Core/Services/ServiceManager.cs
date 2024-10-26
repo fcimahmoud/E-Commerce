@@ -1,8 +1,4 @@
 ﻿
-using Domain.Contracts;
-using Domain.Entities.Identity;
-using Microsoft.Extensions.Options;
-
 namespace Services
 {
     public sealed class ServiceManager : IServiceManager
