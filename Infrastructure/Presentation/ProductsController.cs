@@ -1,7 +1,6 @@
 ﻿
 namespace Presentation
 {
-    [Authorize(Roles = "Admin")]
     public class ProductsController(IServiceManager serviceManager) : ApiController
     {
         [HttpGet]

@@ -8,7 +8,7 @@ namespace Services
         public async Task<OrderResult> CreateOrderAsync(OrderRequest orderRequest, string userEmail)
         {
             // 1. Address
-            var address = mapper.Map<Address>(orderRequest.ShippingAddress);
+            var address = mapper.Map<Address>(orderRequest.shipToAddress);
 
             // 2. Order Items :: Basket => Basket Items => Order Items
             var basket = await basketRepository.GetBasketAsync(orderRequest.BasketId)

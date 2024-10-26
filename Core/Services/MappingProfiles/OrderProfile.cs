@@ -6,7 +6,8 @@ namespace Services.MappingProfiles
         public OrderProfile()
         {
             CreateMap<Address, AddressDTO>().ReverseMap();
-            CreateMap<DeliveryMethod, DeliveryMethodResult>();
+            CreateMap<DeliveryMethod, DeliveryMethodResult>()
+                .ForMember(d => d.Cost, options => options.MapFrom(s => s.Price));
 
             CreateMap<OrderItem, OrderItemDTO>()
                 .ForMember(d => d.ProductId, options => options.MapFrom(s => s.Product.ProductId))

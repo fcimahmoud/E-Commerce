@@ -13,6 +13,15 @@ namespace E_Commerce.API.Extensions
 
             services.ConfigureSwagger();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CORSPolicy", builder =>
+                {
+                    builder.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .WithOrigins("http://localhost:4200");
+                });
+            });
             return services;
         }
         public static IServiceCollection ConfigureSwagger(this IServiceCollection services)
