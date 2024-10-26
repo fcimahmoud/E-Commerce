@@ -1,5 +1,7 @@
 ﻿
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using UserAddress = Domain.Entities.Identity.Address;
+using Domain.Entities.Identity;
 
 namespace Persistence.Identity
 {
@@ -13,7 +15,7 @@ namespace Persistence.Identity
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<Address>().ToTable("Addresses");
+            builder.Entity<UserAddress>().ToTable("Addresses");
         }
     }
 }
