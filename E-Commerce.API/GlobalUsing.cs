@@ -6,3 +6,4 @@ global using Persistence.Repositories;
 global using Services.Abstractions;
 global using Services;
 global using E_Commerce.API.Extensions;
+global using Domain.Entities;

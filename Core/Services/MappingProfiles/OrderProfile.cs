@@ -1,8 +1,8 @@
 ﻿
+global using UserAddress = Domain.Entities.Identity.Address;
+global using Address = Domain.Entities.OrderEntities.Address;
 using Domain.Entities.OrderEntities;
 using Shared.OrderModels;
-
-using UserAddress = Domain.Entities.Identity.Address;
 
 namespace Services.MappingProfiles
 {

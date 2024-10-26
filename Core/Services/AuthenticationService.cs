@@ -107,7 +107,7 @@ namespace Services
             }
             else
             {
-                var userAddress = mapper.Map<Address>(address);
+                var userAddress = mapper.Map<UserAddress>(address);
                 user.Address = userAddress;
             }
 
