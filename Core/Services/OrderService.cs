@@ -29,10 +29,14 @@ namespace Services
             // 4. SubTotal
             var subTotal = orderItems.Sum(item => item.Price * item.Quantity);
 
+            var orderRepo = unitOfWork.GetRepository<Order, Guid>();
+            var existingOrder = await orderRepo.GetAsync(new OrderWithPaymentIntentIdSpecifications(basket.PaymentIntentId!));
+            if(existingOrder != null) 
+                orderRepo.Delete(existingOrder);    
+
             // Save To DataBase
-            var order = new Order(userEmail, address, orderItems, deliveryMethod, subTotal);
-            await unitOfWork.GetRepository<Order, Guid>()
-                .AddAsync(order);
+            var order = new Order(userEmail, address, orderItems, deliveryMethod, subTotal, basket.PaymentIntentId!);
+            await orderRepo.AddAsync(order);
             await unitOfWork.SaveChangesAsync();
 
             // Map & Return

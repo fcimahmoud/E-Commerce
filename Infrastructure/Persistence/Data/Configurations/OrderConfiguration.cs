@@ -9,7 +9,8 @@ namespace Persistence.Data.Configurations
                 address => address.WithOwner());
 
             builder.HasMany(order => order.OrderItems)
-                .WithOne();
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Property(order => order.PaymentStatus)
                 .HasConversion(s => s.ToString(),
