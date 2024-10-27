@@ -1,6 +1,4 @@
 ﻿
-global using System.Linq.Expressions;
-
 namespace Domain.Contracts
 {
     public abstract class Specifications<T> where T : class

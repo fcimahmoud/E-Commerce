@@ -19,8 +19,8 @@ namespace E_Commerce.API
 
             #region Pipelines
 
-            app.UseCustomExceptionMiddleware();
             await app.SeedDbAsync();
+            app.UseCustomExceptionMiddleware();
 
             if (app.Environment.IsDevelopment())
             {
@@ -28,10 +28,13 @@ namespace E_Commerce.API
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCors("CORSPolicy");
+            app.UseHttpsRedirection();
+
             app.UseAuthentication();
             app.UseAuthorization();
+
             app.MapControllers();
 
             app.Run(); 

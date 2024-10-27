@@ -1,6 +1,4 @@
 ﻿
-using Shared.OrderModels;
-
 namespace Services.Abstractions
 {
     public interface IOrderService

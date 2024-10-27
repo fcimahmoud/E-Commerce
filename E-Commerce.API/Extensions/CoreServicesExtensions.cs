@@ -1,5 +1,4 @@
-﻿using Shared;
-
+﻿
 namespace E_Commerce.API.Extensions
 {
     public static class CoreServicesExtensions

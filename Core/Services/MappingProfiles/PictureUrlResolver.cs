@@ -1,8 +1,4 @@
 ﻿
-global using Domain.Entities;
-global using Microsoft.Extensions.Configuration;
-global using Shared;
-
 namespace Services.MappingProfiles
 {
     internal class PictureUrlResolver(IConfiguration configuration) : IValueResolver<Product, ProductResultDTO, string>

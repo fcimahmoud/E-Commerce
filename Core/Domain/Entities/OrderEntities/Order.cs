@@ -5,14 +5,15 @@ namespace Domain.Entities.OrderEntities
     public class Order : BaseEntity<Guid>
     {
         public Order() { }
-        public Order(string userEmail, Address shippingAddress, ICollection<OrderItem> orderItems, DeliveryMethod deliveryMethod, decimal subTotal)
+        public Order(string userEmail, Address shippingAddress, ICollection<OrderItem> orderItems, DeliveryMethod deliveryMethod, decimal subTotal, string paymentIntentId)
         {
             Id = Guid.NewGuid();
             UserEmail = userEmail;
-            ShippingAddress = shippingAddress; 
+            ShippingAddress = shippingAddress;
             OrderItems = orderItems;
             DeliveryMethod = deliveryMethod;
             SubTotal = subTotal;
+            PaymentIntentId = paymentIntentId;
         }
 
         // 1. User Email
@@ -31,7 +32,7 @@ namespace Domain.Entities.OrderEntities
         // 7. SubTotal = {Order Item Price * Quantity} For All Items
         public decimal SubTotal { get; set; }
         // 8. Payment => Required for the next Session
-        public string PaymentIntentId { get; set; } = string.Empty;
+        public string PaymentIntentId { get; set; }
 
     }
 }

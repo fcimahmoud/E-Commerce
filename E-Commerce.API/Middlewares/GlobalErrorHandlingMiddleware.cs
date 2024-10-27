@@ -1,8 +1,4 @@
 ﻿
-global using Domain.Exceptions;
-global using Shared.ErrorModels;
-global using System.Net;
-
 namespace E_Commerce.API.Middlewares
 {
     public class GlobalErrorHandlingMiddleware

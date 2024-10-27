@@ -1,6 +1,4 @@
 ﻿
-global using StackExchange.Redis;
-
 namespace Persistence.Repositories
 {
     public class BasketRepository(IConnectionMultiplexer connectionMultiplexer)

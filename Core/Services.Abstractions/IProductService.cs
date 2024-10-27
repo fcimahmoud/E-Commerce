@@ -1,6 +1,4 @@
 ﻿
-global using Shared;
-
 namespace Services.Abstractions
 {
     public interface IProductService

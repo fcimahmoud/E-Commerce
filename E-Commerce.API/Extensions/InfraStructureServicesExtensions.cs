@@ -1,14 +1,4 @@
 ﻿
-global using Domain.Entities;
-global using Microsoft.AspNetCore.Identity;
-global using Persistence.Identity;
-global using StackExchange.Redis;
-global using Microsoft.AspNetCore.Authentication.JwtBearer;
-global using Shared;
-global using Microsoft.IdentityModel.Tokens;
-global using System.Text;
-using Domain.Entities.Identity;
-
 namespace E_Commerce.API.Extensions
 {
     public static class InfraStructureServicesExtensions

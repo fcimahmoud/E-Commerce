@@ -1,8 +1,4 @@
 ﻿
-using Microsoft.AspNetCore.Authorization;
-using Shared.OrderModels;
-using System.Security.Claims;
-
 namespace Presentation
 {
     [Authorize]
@@ -32,7 +28,6 @@ namespace Presentation
             return Ok(order);
         }
 
-        [AllowAnonymous]
         [HttpGet("DeliveryMethods")]
         public async Task<ActionResult<IEnumerable<DeliveryMethodResult>>> GetDeliveryMethodsAsync()
         {

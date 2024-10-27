@@ -1,6 +1,4 @@
 ﻿
-using Domain.Contracts;
-
 namespace Services.Specifications
 {
     internal class ProductWithBrandAndTypeSpecifications : Specifications<Product>

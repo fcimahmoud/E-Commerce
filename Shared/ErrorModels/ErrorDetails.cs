@@ -1,6 +1,4 @@
 ﻿
-global using System.Text.Json;
-
 namespace Shared.ErrorModels
 {
     public class ErrorDetails

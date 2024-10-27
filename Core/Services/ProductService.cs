@@ -1,12 +1,4 @@
 ﻿
-global using Services.Abstractions;
-using AutoMapper;
-using Domain.Contracts;
-using Domain.Entities;
-using Domain.Exceptions;
-using Services.Specifications;
-using Shared;
-
 namespace Services
 {
     internal class ProductService(IUnitOfWork unitOfWork, IMapper mapper) : IProductService

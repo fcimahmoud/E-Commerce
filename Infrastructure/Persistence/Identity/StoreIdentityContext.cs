@@ -1,8 +1,4 @@
 ﻿
-global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-global using UserAddress = Domain.Entities.Identity.Address;
-using Domain.Entities.Identity;
-
 namespace Persistence.Identity
 {
     public class StoreIdentityContext : IdentityDbContext<User>
