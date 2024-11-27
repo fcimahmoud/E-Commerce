@@ -1,7 +1,4 @@
 ﻿
-using Domain.Entities.Identity;
-using Microsoft.AspNetCore.Identity;
-
 namespace Persistence
 {
     public class DbInitializer : IDbInitializer

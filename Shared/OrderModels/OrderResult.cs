@@ -1,6 +1,4 @@
 ﻿
-using System.Net;
-
 namespace Shared.OrderModels
 {
     public record OrderResult

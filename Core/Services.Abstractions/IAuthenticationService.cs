@@ -1,7 +1,4 @@
 ﻿
-using Shared.ErrorModels;
-using Shared.OrderModels;
-
 namespace Services.Abstractions
 {
     public interface IAuthenticationService

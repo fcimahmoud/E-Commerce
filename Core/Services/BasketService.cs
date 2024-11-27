@@ -1,7 +1,4 @@
 ﻿
-using Domain.Contracts;
-using Domain.Exceptions;
-
 namespace Services
 {
     internal class BasketService(IBasketRepository basketRepository, IMapper mapper)

@@ -1,12 +1,10 @@
 ﻿
-using Services.Abstractions;
-
 namespace Presentation
 {
     public class BasketController(IServiceManager serviceManager)
         : ApiController
     {
-        [HttpGet("{id}")] // Get baseUrl/api/Basket/value
+        [HttpGet] // Get baseUrl/api/Basket
         public async Task<ActionResult<BasketDTO>> Get(string id)
         {
             var basket = await serviceManager.BasketService.GetBasketAsync(id);

@@ -1,9 +1,4 @@
 ﻿
-using Domain.Contracts;
-using Domain.Entities.OrderEntities;
-using Services.Specifications;
-using Shared.OrderModels;
-
 namespace Services
 {
     internal class OrderService (IUnitOfWork unitOfWork, IMapper mapper, 
@@ -13,7 +8,7 @@ namespace Services
         public async Task<OrderResult> CreateOrderAsync(OrderRequest orderRequest, string userEmail)
         {
             // 1. Address
-            var address = mapper.Map<Address>(orderRequest.ShippingAddress);
+            var address = mapper.Map<Address>(orderRequest.shipToAddress);
 
             // 2. Order Items :: Basket => Basket Items => Order Items
             var basket = await basketRepository.GetBasketAsync(orderRequest.BasketId)
@@ -34,10 +29,14 @@ namespace Services
             // 4. SubTotal
             var subTotal = orderItems.Sum(item => item.Price * item.Quantity);
 
+            var orderRepo = unitOfWork.GetRepository<Order, Guid>();
+            var existingOrder = await orderRepo.GetAsync(new OrderWithPaymentIntentIdSpecifications(basket.PaymentIntentId!));
+            if(existingOrder != null) 
+                orderRepo.Delete(existingOrder);    
+
             // Save To DataBase
-            var order = new Order(userEmail, address, orderItems, deliveryMethod, subTotal);
-            await unitOfWork.GetRepository<Order, Guid>()
-                .AddAsync(order);
+            var order = new Order(userEmail, address, orderItems, deliveryMethod, subTotal, basket.PaymentIntentId!);
+            await orderRepo.AddAsync(order);
             await unitOfWork.SaveChangesAsync();
 
             // Map & Return

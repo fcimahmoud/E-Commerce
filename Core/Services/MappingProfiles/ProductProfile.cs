@@ -1,9 +1,4 @@
 ﻿
-
-global using AutoMapper;
-using Domain.Entities;
-using Shared;
-
 namespace Services.MappingProfiles
 {
     internal class ProductProfile : Profile
