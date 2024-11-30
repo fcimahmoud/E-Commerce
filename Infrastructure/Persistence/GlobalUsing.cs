@@ -1,0 +1,14 @@
+﻿global using UserAddress = Domain.Entities.Identity.Address;
+global using OrderEntity = Domain.Entities.OrderEntities.Order;
+global using Microsoft.EntityFrameworkCore;
+global using Domain.Entities;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Domain.Contracts;
+global using Persistence.Data;
+global using System.Text.Json;
+global using Domain.Entities.Identity;
+global using Microsoft.AspNetCore.Identity;
+global using Domain.Entities.OrderEntities;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using StackExchange.Redis;
+global using System.Collections.Concurrent;
