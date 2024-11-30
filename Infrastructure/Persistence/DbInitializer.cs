@@ -1,29 +1,27 @@
 ﻿
+using Persistence.Identity;
+
 namespace Persistence
 {
-    public class DbInitializer : IDbInitializer
+    public class DbInitializer (
+        StoreContext storeContext, 
+        UserManager<User> userManager, 
+        RoleManager<IdentityRole> roleManager,
+        StoreIdentityContext storeIdentityContext
+        )
+        : IDbInitializer
     {
-        private readonly StoreContext _storeContext;
-        private readonly UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-
-        public DbInitializer(StoreContext storeContext, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
-        {
-            _storeContext = storeContext;
-            _userManager = userManager;
-            _roleManager = roleManager;
-        }
 
         public async Task InitializeAsync()
         {
             try
             {
                 // Create DataBase If It doesn't Exist & Applying Any Pending Migrations
-                if (_storeContext.Database.GetPendingMigrations().Any())
-                    await _storeContext.Database.MigrateAsync();
+                if (storeContext.Database.GetPendingMigrations().Any())
+                    await storeContext.Database.MigrateAsync();
 
                 // Apply Data Seeding
-                if (!_storeContext.ProductTypes.Any())
+                if (!storeContext.ProductTypes.Any())
                 {
                     // Read Types From File as String 
                     var typesData = await File.ReadAllTextAsync(@"..\Infrastructure\Persistence\Data\Seeding\types.json");
@@ -34,12 +32,12 @@ namespace Persistence
                     // Add to DB & Save Changes
                     if (types != null && types.Any())
                     {
-                        await _storeContext.ProductTypes.AddRangeAsync(types);
-                        await _storeContext.SaveChangesAsync();
+                        await storeContext.ProductTypes.AddRangeAsync(types);
+                        await storeContext.SaveChangesAsync();
                     }
                 }
 
-                if (!_storeContext.ProductBrands.Any())
+                if (!storeContext.ProductBrands.Any())
                 {
                     // Read Types From File as String 
                     var brandsData = await File.ReadAllTextAsync(@"..\Infrastructure\Persistence\Data\Seeding\brands.json");
@@ -50,12 +48,12 @@ namespace Persistence
                     // Add to DB & Save Changes
                     if (brands != null && brands.Any())
                     {
-                        await _storeContext.ProductBrands.AddRangeAsync(brands);
-                        await _storeContext.SaveChangesAsync();
+                        await storeContext.ProductBrands.AddRangeAsync(brands);
+                        await storeContext.SaveChangesAsync();
                     }
                 }
 
-                if (!_storeContext.Products.Any())
+                if (!storeContext.Products.Any())
                 {
                     // Read Types From File as String 
                     var productsData = await File.ReadAllTextAsync(@"..\Infrastructure\Persistence\Data\Seeding\products.json");
@@ -66,11 +64,11 @@ namespace Persistence
                     // Add to DB & Save Changes
                     if (products != null && products.Any())
                     {
-                        await _storeContext.Products.AddRangeAsync(products);
-                        await _storeContext.SaveChangesAsync();
+                        await storeContext.Products.AddRangeAsync(products);
+                        await storeContext.SaveChangesAsync();
                     }
                 }
-                if (!_storeContext.DeliveryMethods.Any())
+                if (!storeContext.DeliveryMethods.Any())
                 {
                     // Read Types From File as String 
                     var data = await File.ReadAllTextAsync(@"..\Infrastructure\Persistence\Data\Seeding\delivery.json");
@@ -81,8 +79,8 @@ namespace Persistence
                     // Add to DB & Save Changes
                     if (methods != null && methods.Any())
                     {
-                        await _storeContext.DeliveryMethods.AddRangeAsync(methods);
-                        await _storeContext.SaveChangesAsync();
+                        await storeContext.DeliveryMethods.AddRangeAsync(methods);
+                        await storeContext.SaveChangesAsync();
                     }
                 }
             }
@@ -94,15 +92,19 @@ namespace Persistence
 
         public async Task InitializeIdentityAsync()
         {
+            // Create DataBase If It doesn't Exist & Applying Any Pending Migrations
+            if (storeIdentityContext.Database.GetPendingMigrations().Any())
+                await storeIdentityContext.Database.MigrateAsync();
+
             // Seed Default Roles
-            if(!_roleManager.Roles.Any())
+            if (!roleManager.Roles.Any())
             {
-                await _roleManager.CreateAsync(new IdentityRole("SuperAdmin"));
-                await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                await roleManager.CreateAsync(new IdentityRole("SuperAdmin"));
+                await roleManager.CreateAsync(new IdentityRole("Admin"));
             }
 
             // Seed Default Users
-            if(!_userManager.Users.Any())
+            if(!userManager.Users.Any())
             {
                 var superAdminUser = new User
                 {
@@ -119,11 +121,11 @@ namespace Persistence
                     PhoneNumber = "1234567890",
                 };
 
-                await _userManager.CreateAsync(superAdminUser, "Passw0rd");
-                await _userManager.CreateAsync(adminUser, "Passw0rd");
+                await userManager.CreateAsync(superAdminUser, "Passw0rd");
+                await userManager.CreateAsync(adminUser, "Passw0rd");
 
-                await _userManager.AddToRoleAsync(superAdminUser, "SuperAdmin");
-                await _userManager.AddToRoleAsync(adminUser, "Admin");
+                await userManager.AddToRoleAsync(superAdminUser, "SuperAdmin");
+                await userManager.AddToRoleAsync(adminUser, "Admin");
             }
         }
     }

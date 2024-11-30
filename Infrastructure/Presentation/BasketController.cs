@@ -4,7 +4,7 @@ namespace Presentation
     public class BasketController(IServiceManager serviceManager)
         : ApiController
     {
-        [HttpGet] // Get baseUrl/api/Basket
+        [HttpGet] // Get baseUrl/api/Basket?id=value
         public async Task<ActionResult<BasketDTO>> Get(string id)
         {
             var basket = await serviceManager.BasketService.GetBasketAsync(id);
