@@ -62,7 +62,7 @@ The project is organized as follows:
 ---
 
 ## **💻 Technologies Used**
-- Framework: .NET 6
+- Framework: .NET Core 8
 - Database: SQL Server, Redis
 - Authentication: Identity, JWT
 - Payment Integration: Stripe
