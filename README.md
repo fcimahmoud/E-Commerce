@@ -55,9 +55,23 @@ A comprehensive backend application designed and developed as part of my learnin
 
 The project is organized as follows:  
 ```plaintext
-├── API/                # API project
-├── Core/               # Core business logic and abstractions
-└── Infrastructure/     # Data access and external integrations
+├── Core/                # Core business logic and abstractions
+    ├── Domain
+        ├── Contracts
+        └── Entities
+    ├── Services
+    └── Services.Abstractions
+├── Infrastructure/      # Data access and external integrations
+    ├── Persistence
+        ├── Data
+        ├── Migrations
+        └── Repositories
+    └── Presentation
+├── GFoot.API/           # API project
+    ├── Extensions
+    ├── Middlewares
+    └── Program.cs
+└── Shared               # DTOs - Data Transfer Objects
 ```
 ---
 
