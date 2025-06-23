@@ -67,7 +67,7 @@ The project is organized as follows:
         ├── Migrations
         └── Repositories
     └── Presentation
-├── GFoot.API/           # API project
+├── Ecommerce.API/           # API project
     ├── Extensions
     ├── Middlewares
     └── Program.cs
