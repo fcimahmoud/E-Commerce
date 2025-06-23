@@ -54,7 +54,7 @@ A comprehensive backend application designed and developed as part of my learnin
 ## **📂 Project Structure**  
 
 The project is organized as follows:  
-```plaintext
+```bash
 ├── Core/                # Core business logic and abstractions
     ├── Domain
         ├── Contracts
